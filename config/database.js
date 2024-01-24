@@ -2,7 +2,7 @@ require("dotenv").config();
 
 const { Sequelize } = require("sequelize");
 
-const sequelize = new Sequelize({
+const sequelize = new Sequelize(process.env.JAWSDB_URL || process.env.DATABASE_URL, {
   dialect: "mysql",
   host: process.env.DB_HOST,
   username: process.env.DB_USER,
