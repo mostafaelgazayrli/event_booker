@@ -1,0 +1,73 @@
+<div class="flex flex-col">
+  <div class="bg-white p-8 shadow-md my-8">
+    <div class="text-center mb-6">
+      <h2 class="text-2xl font-bold">Invoice</h2>
+    </div>
+
+    <div class="mb-4">
+      <p class="mb-1">Invoice to {{invoiceData.invoiceTo}}</p>
+      <!-- ... Other address fields ... -->
+      <p>Invoice ID: {{invoiceData.invoiceId}}</p>
+      <p>Order Date: {{invoiceData.orderDate}}</p>
+      <p>{{invoiceData.nearLocation}}</p>
+    </div>
+
+    <table class="w-full border-collapse mb-4">
+      <thead>
+        <tr>
+          <th class="border py-2 px-4">#</th>
+          <th class="border py-2 px-4">Event Details</th>
+          <th class="border py-2 px-4">Type</th>
+          <th class="border py-2 px-4">Qty</th>
+          <th class="border py-2 px-4">Unit Price</th>
+          <th class="border py-2 px-4">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each invoiceData.items}}
+          <tr>
+            <td class="border py-2 px-4">{{this.number}}</td>
+            <td class="border py-2 px-4">{{this.eventDetails}}</td>
+            <td class="border py-2 px-4">{{this.type}}</td>
+            <td class="border py-2 px-4">{{this.quantity}}</td>
+            <td class="border py-2 px-4">{{this.unitPrice}}</td>
+            <td class="border py-2 px-4">{{this.total}}</td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+
+    <div class="text-right">
+      <p class="text-xl font-bold">Invoice Total:
+        {{invoiceData.invoiceTotal}}</p>
+      <p>{{invoiceData.paymentMethod}}</p>
+    </div>
+  </div>
+
+  <div class="bg-white p-8 shadow-md mt-8">
+
+    <div class="text-center mb-6">
+      <h2 class="text-2xl font-bold">Ticket</h2>
+    </div>
+    <div class="flex">
+      <div class="mb-4 w-[50%]">
+        <h3 class="text-lg font-semibold">{{ticketData.eventName}}</h3>
+        <p class="flex justify-between"><span class="font-medium">Event Date:</span>
+          <span> {{ticketData.eventDateTime}}</span></p>
+        <p class="flex justify-between"><span class="font-medium">Name:</span>
+          <span>{{ticketData.userName}}</span>
+        </p>
+        <p class="flex justify-between"><span class="font-medium">No of Tickets:</span>
+          <span>{{ticketData.ticketQuantity}}x Ticket</span></p>
+        <p class="flex justify-between"><span class="font-medium">Total:</span>
+          <span> {{ticketData.totalAmount}}</span></p>
+      </div>
+
+      <img
+        src={{ticketData.image}}
+        alt="Ticket Image"
+        class="w-full max-w-md mx-auto mb-4"
+      />
+    </div>
+  </div>
+</div>

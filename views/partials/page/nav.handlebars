@@ -1,0 +1,135 @@
+  <nav class="bg-white border-gray-200">
+    <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 shadow-md rounded-md">
+      <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
+        <span class="self-center text-2xl font-semibold whitespace-nowrap">EventBooker</span>
+      </a>
+      <div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse relative">
+        {{#if userLoggedIn}}
+          <button
+            type="button"
+            class="flex text-sm bg-white shadow rounded-md px-4 py-2 md:me-0 focus:ring-4 focus:ring-gray-300"
+            id="user-menu-button"
+            aria-expanded="false"
+          >
+            <span>{{username}}</span>
+          </button>
+          <!-- Dropdown menu -->
+          <div
+            class="z-50 absolute top-full right-0 mt-2 w-48 bg-white border rounded-md shadow-md hidden"
+            id="user-dropdown"
+          >
+            <div class="px-4 py-3">
+              <span class="block text-sm text-[#000]">{{username}}</span>
+              <span class="block text-sm text-gray-500 truncate">{{userEmail}}</span>
+            </div>
+            <ul class="py-2" aria-labelledby="user-menu-button">
+              <li>
+                <a
+                  href="/logout"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                >Sign out</a>
+              </li>
+            </ul>
+          </div>
+        {{else}}
+          <a href="/login" class="text-sm text-blue-500">Sign In</a>
+        {{/if}}
+      </div>
+      <div
+        class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
+        id="navbar-user"
+      >
+        <ul
+          class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white"
+        >
+          <li>
+            <a
+              href="/"
+              class="block py-2 px-3 text-[#000] navbar rounded md:hover:text-blue-700 md:p-0 {{#if homeActive}} text-blue-700{{/if}}"
+              aria-current="page"
+            >Home</a>
+          </li>
+          <li>
+            <a
+              href="/about"
+              class="block py-2 px-3 text-[#000] navbar rounded md:hover:text-blue-700 md:p-0 {{#if aboutActive}}text-blue-700{{/if}}"
+            >About</a>
+          </li>
+          <li>
+            <a
+              href="/contact"
+              class="block py-2 px-3 text-[#000] navbar rounded md:hover:text-blue-700 md:p-0 {{#if contactActive}}text-blue-700{{/if}}"
+            >Contact</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  <div class="flex justify-between items-center">
+  <h4 class="mr-4">Date: <span id="date"></span></h4>
+  <h4>Weather: <span id="temp"></span>°F <img src="" alt=""> </h4>
+</div>
+
+
+  </nav>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const userMenuButton = document.getElementById("user-menu-button");
+    const userDropdown = document.getElementById("user-dropdown");
+    userMenuButton.addEventListener("click", function () {
+      userDropdown.classList.toggle("hidden");
+    });
+    document.addEventListener("click", function (event) {
+      if (!userMenuButton.contains(event.target) && !userDropdown.contains(event.target)) {
+        userDropdown.classList.add("hidden");
+      }
+    });
+
+    // Add the following script to set active classes based on the current page
+    const currentPage = window.location.pathname;
+    const homeLink = document.querySelector('.navbar a[href="/"]');
+    const aboutLink = document.querySelector('.navbar a[href="/about"]');
+    const contactLink = document.querySelector('.navbar a[href="/contact"]');
+
+    if (currentPage === '/') {
+      homeLink.classList.add(' text-blue-700');
+    } else if (currentPage === '/about') {
+      aboutLink.classList.add(' text-blue-700');
+    } else if (currentPage === '/contact') {
+      contactLink.classList.add(' text-blue-700');
+    }
+  });
+
+  const apiKey = 'b1dc0c5d88876fe10c78ebc1ce193ac0';
+  const temp = document.getElementById('temp')
+  const date = document.getElementById('date')
+
+navigator.geolocation.getCurrentPosition(
+  (position) => {
+    const { latitude, longitude } = position.coords;
+
+
+    fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}`)
+      .then(response => response.json())
+      .then(data => {
+        const tempK = data.main.temp;
+        const tempF = Number(((tempK * 9/5) - 459.67).toFixed(1));
+        temp.textContent = tempF
+})
+      .catch(error => {
+        console.error('Error fetching weather data:', error);
+      });
+  },
+  (error) => {
+    console.error('Error getting user location:', error);
+  }
+);
+
+const currentDate = new Date();
+
+
+const year = currentDate.getFullYear();
+const month = currentDate.getMonth() + 1; 
+const day = currentDate.getDate();
+date.textContent = `${year}-${month < 10 ? '0' : ''}${month}-${day < 10 ? '0' : ''}${day}` 
+</script>

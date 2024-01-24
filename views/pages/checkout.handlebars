@@ -1,0 +1,101 @@
+<form action="/events/{{event.id}}/book" method="post" class="shadow-md">
+  <div class="px-6 py-4">
+    <div class="border-b flex flex-row-reverse border-gray-900/10 pb-12 mt-10">
+      <div class="w-[40%]">
+
+        <h2 class="text-base font-semibold leading-7 text-gray-900">Billing
+          Information</h2>
+
+        <div class="mt-4">
+          <h3 class="text-lg font-semibold">{{event.eventName}}</h3>
+          <p class="text-sm text-gray-600">
+            Date:
+            {{event.eventDate}}
+            {{event.eventTime}}, Duration:
+            {{event.duration}}h
+          </p>
+          <p class="text-sm text-gray-600">Venue: {{event.venueName}}</p>
+
+          <img
+            src="{{event.image}}"
+            alt="Event Image"
+            class="mt-4 h-44 w-full object-cover object-center rounded-md"
+          />
+          <p class="text-sm text-gray-600">Ticket Price:
+            <span> ${{event.ticketPrice}}</span></p>
+          <p class="text-sm text-gray-600">Total Tickets:
+            <span>{{totalTickets}}</span>
+          </p>
+          <p class="text-sm text-gray-600">Total:
+            <span> ${{event.total}}</span></p>
+        </div>
+      </div>
+      <div class="w-[60%]">
+
+        <div class="grid p-4 grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+          <!-- ... Other form fields ... -->
+
+          <div class="sm:col-span-4">
+            <label
+              for="cardNumber"
+              class="block text-sm font-medium leading-6 text-gray-900"
+            >Card number*</label>
+            <div class="mt-2">
+              <input
+                type="text"
+                id="cardNumber"
+                name="cardNumber"
+                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="sm:col-span-2">
+            <label
+              for="expiryDate"
+              class="block text-sm font-medium leading-6 text-gray-900"
+            >Expiry date*</label>
+            <div class="mt-2">
+              <input
+                type="text"
+                id="expiryDate"
+                name="expiryDate"
+                placeholder="MM/YY"
+                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="sm:col-span-2">
+            <label
+              for="cvv"
+              class="block text-sm font-medium leading-6 text-gray-900"
+            >CVV*</label>
+            <div class="mt-2">
+              <input
+                type="text"
+                id="cvv"
+                name="cvv"
+                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                required
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-10 p-4 flex items-center justify-end gap-x-6">
+          <button
+            type="button"
+            class="text-sm font-semibold leading-6 text-gray-900"
+          >Cancel</button>
+          <button
+            type="submit"
+            class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          >Confirm & Pay</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
